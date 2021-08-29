@@ -45,7 +45,8 @@ Item &Item::operator+(Item &a) {
   // add a number and a string
   else if (type == NUMBER && a.type == STRING) {
     result->type = STRING;
-    string str = SSTR(n);
+    // string str = SSTR(n);
+    string str = to_string(n);
     result->s = a.s + str;
   }
 
@@ -65,7 +66,8 @@ Item &Item::operator+(Item &a) {
   // add a string and a number
   else if (type == STRING && a.type == NUMBER) {
     result->type = STRING;
-    string str = SSTR(a.n);
+    // string str = SSTR(a.n);
+    string str = to_string(a.n);
     result->s = str + s;
   }
 

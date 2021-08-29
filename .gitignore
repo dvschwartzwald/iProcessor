@@ -1,5 +1,6 @@
 # Mac
 .DS_Store
+.vscode
 
 # Prerequisites
 *.d
@@ -29,7 +30,14 @@
 *.a
 *.lib
 
+# Images
+*.pgm
+*.pgm
+*.ppm
+*.pnm
+
 # Executables
 *.exe
 *.out
 *.app
+iProcessor
