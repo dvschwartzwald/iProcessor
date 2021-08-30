@@ -6,7 +6,7 @@
 CC        = gcc
 CXX       = g++
 CFLAGS    = -pipe -Wall -W 
-CXXFLAGS  = -pipe -Wall -W -std=c++11
+CXXFLAGS  = -pipe -Wall -W -std=c++17
 INCPATH   = -I.
 LINK      = g++
 LDFLAGS   = 
