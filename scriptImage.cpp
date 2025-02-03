@@ -78,8 +78,7 @@ void Script::imgShow() {
     cerr << "invalid type, expected an image" << endl;
     return;
   }
-  image = s.top().i; s.pop();
-  //image->show();
+  Script::print();
 }
 
 void Script::imgUpdate() {
@@ -492,12 +491,19 @@ void Script::imgFindShapes() {
     cerr << "invalid type, expected an image" << endl;
     return;
   }
-  image = s.top().i; s.pop();
-  image->findShapes();
-  Item item1;
-  item1.type = IMAGE;
-  item1.i = image;
-  s.push(item1);
+  try {
+    image = s.top().i; s.pop();
+    image->findShapes();
+    Item item1;
+    item1.type = IMAGE;
+    item1.i = image;
+    s.push(item1);
+  } 
+  catch (const exception &e) {
+    cerr << "-ERR> imgFindShapes:"
+         << e.what()
+         << endl;
+  }
 }
 
 void Script::imgOverlayShapes() {

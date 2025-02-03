@@ -108,6 +108,9 @@ void Script::init() {
   // components
   m->p = &Script::imgFindShapes; m->args = "image";        f["imgFindShapes"] = *m;
   m->p = &Script::imgOverlayShapes; m->args = "image";     f["imgOverlayShapes"] = *m;
+  m->p = &Script::imgDumpDictionary; m->args = "image";    f["imgDumpDictionary"] = *m;
+  m->p = &Script::imgPrune; m->args = "image, size, leafOnly"; f["imgPrune"] = *m;
+  m->p = &Script::imgCoalesce; m->args = "image, levels";  f["imgCoalesce"] = *m;
   
   // utility
   m->p = &Script::imgToHSV;    m->args = "image";          f["imgToHSV"] = *m;

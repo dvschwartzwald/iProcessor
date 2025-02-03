@@ -128,6 +128,9 @@ public:
 
   void imgFindShapes();
   void imgOverlayShapes();
+  void imgDumpDictionary();
+  void imgPrune();
+  void imgCoalesce();
   
   void imgToHSV();
   void imgPlane();

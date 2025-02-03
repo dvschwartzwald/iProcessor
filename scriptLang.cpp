@@ -49,7 +49,7 @@ void Script::print() {
     string name = "/tmp/iProcessor_img";
     ti.push_back(name);
     item.i->saveImage(name);
-    string cmd = string("/usr/bin/display ") + name + " &";
+    string cmd = string("/usr/bin/env open -a Preview ") + name;
     system(cmd.c_str());
     return;
   }
@@ -243,9 +243,7 @@ void Script::at() {
     // find item
     std::list<Item>::iterator iter;
     unsigned int cnt = 0;
-    for (iter = s.top().l.begin(), cnt = 0;
-      iter != s.top().l.end(), cnt != index;
-      iter++, cnt++) {
+    for (iter = s.top().l.begin(), cnt = 0; iter != s.top().l.end() && cnt != index; iter++, cnt++) {
     }
 
     // create a new item
