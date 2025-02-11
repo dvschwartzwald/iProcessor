@@ -104,6 +104,7 @@ public:
   // image functions
   void imgRead();
   void imgWrite();
+  void imgWriteDB();
   void imgDiscard();
   void imgWidth();
   void imgHeight();
@@ -128,6 +129,7 @@ public:
 
   void imgFindShapes();
   void imgOverlayShapes();
+  void imgReconstruct();
   void imgDumpDictionary();
   void imgPrune();
   void imgCoalesce();

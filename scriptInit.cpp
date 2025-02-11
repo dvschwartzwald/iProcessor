@@ -80,6 +80,7 @@ void Script::init() {
   // basic I/O
   m->p = &Script::imgRead;    m->args = "filename";        f["imgRead"] = *m;
   m->p = &Script::imgWrite;   m->args = "filename, image"; f["imgWrite"] = *m;
+  m->p = &Script::imgWriteDB; m->args = "filename, image"; f["imgWriteDB"] = *m;
   m->p = &Script::imgDiscard; m->args = "filename, image"; f["imgDiscard"] = *m;
   m->p = &Script::imgShow;    m->args = "image";           f["imgShow"] = *m;
   m->p = &Script::imgUpdate;  m->args = "image";           f["imgUpdate"] = *m;
@@ -111,6 +112,7 @@ void Script::init() {
   m->p = &Script::imgDumpDictionary; m->args = "image";    f["imgDumpDictionary"] = *m;
   m->p = &Script::imgPrune; m->args = "image, size, leafOnly"; f["imgPrune"] = *m;
   m->p = &Script::imgCoalesce; m->args = "image, levels";  f["imgCoalesce"] = *m;
+  m->p = &Script::imgReconstruct; m->args = "image, filename";  f["imgReconstruct"] = *m;
   
   // utility
   m->p = &Script::imgToHSV;    m->args = "image";          f["imgToHSV"] = *m;

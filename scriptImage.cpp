@@ -54,6 +54,72 @@ void Script::imgWrite() {
   s.push(item);
 }
 
+void Script::imgWriteDB() {
+  if (s.size() < 2) {
+    cerr << "stack underflow" << endl;
+    return;
+  }
+  if (s.top().type != STRING) {
+    s.pop();
+    cerr << "invalid type, expected a string" << endl;
+    return;
+  }
+  string filename = s.top().s; s.pop();
+  if (s.top().type != IMAGE) {
+    s.pop();
+    cerr << "invalid type, expected an image" << endl;
+    return;
+  }
+  image = s.top().i; s.pop();
+  image->writeDB(false, filename);
+  Item item;
+  item.type = IMAGE;
+  item.i = image;
+  s.push(item);
+}
+
+void Script::imgReconstruct() {
+  if (s.size() < 2) {
+    cerr << "stack underflow" << endl;
+    return;
+  }
+  if (s.top().type != STRING) {
+    s.pop();
+    cerr << "invalid type, expected a string" << endl;
+    return;
+  }
+  string filename = s.top().s; s.pop();
+  if (s.top().type != IMAGE) {
+    s.pop();
+    cerr << "invalid type, expected an image" << endl;
+    return;
+  }
+  image = s.top().i; s.pop();
+  image->reconstruct(false, filename);
+  Item item;
+  item.type = IMAGE;
+  item.i = image;
+  s.push(item);
+}
+
+void Script::imgDumpDictionary() {
+  if (s.size() < 1) {
+    cerr << "stack underflow" << endl;
+    return;
+  }
+  if (s.top().type != IMAGE) {
+    s.pop();
+    cerr << "invalid type, expected an image" << endl;
+    return;
+  }
+  image = s.top().i; s.pop();
+  image->dumpDictionary(cout);
+  Item item;
+  item.type = IMAGE;
+  item.i = image;
+  s.push(item);
+}
+
 void Script::imgDiscard() {
   if (s.size() < 1) {
     cerr << "stack underflow" << endl;
@@ -179,6 +245,60 @@ void Script::imgIntensity() {
   }
   image = s.top().i; s.pop();
   image->intensity();
+  Item item;
+  item.type = IMAGE;
+  item.i = image;
+  s.push(item);
+}
+
+void Script::imgCoalesce() {
+  if (s.size() < 2) {
+    cerr << "stack underflow" << endl;
+    return;
+  }
+  if (s.top().type != NUMBER) {
+    s.pop();
+    cerr << "invalid type, expected a number" << endl;
+    return;
+  }
+  double levels = s.top().n; s.pop();
+  if (s.top().type != IMAGE) {
+    s.pop();
+    cerr << "invalid type, expected an image" << endl;
+    return;
+  }
+  image = s.top().i; s.pop();
+  image->coalesce(false, (int)levels);
+  Item item;
+  item.type = IMAGE;
+  item.i = image;
+  s.push(item);
+}
+
+void Script::imgPrune() {
+  if (s.size() < 3) {
+    cerr << "stack underflow" << endl;
+    return;
+  }
+  if (s.top().type != BOOL) {
+    s.pop();
+    cerr << "invalid type, expected a boolean" << endl;
+    return;
+  }
+  bool leafOnly = s.top().b; s.pop();
+  if (s.top().type != NUMBER) {
+    s.pop();
+    cerr << "invalid type, expected a number" << endl;
+    return;
+  }
+  double size = s.top().n; s.pop();
+  if (s.top().type != IMAGE) {
+    s.pop();
+    cerr << "invalid type, expected an image" << endl;
+    return;
+  }
+  image = s.top().i; s.pop();
+  image->prune(false, (int)size, leafOnly);
   Item item;
   item.type = IMAGE;
   item.i = image;

@@ -465,7 +465,7 @@ PNM_Color PNM::hsv(int col, int row) {
   double var_R, var_G, var_B;
   double var_Min, var_Max, del_Max;
   double H, S, V;
-  pair<double, double> result;
+  // pair<double, double> result;
   switch (_type) {
   case typePBM:
     _color.red((int)bit_image[col][row]);
@@ -491,6 +491,7 @@ PNM_Color PNM::hsv(int col, int row) {
 
       V = var_Max;
 
+      H = 0.0;
       if (del_Max == 0.0) { // This is a gray, no chroma...
         H = 0.0;            // HSV results from 0 to 1
         S = 0.0;

@@ -203,6 +203,7 @@ Token Script::getToken() {
   // local variables
   int c;
   string str;
+  string lstr;
   Token token;
 
   // while input is not empty
@@ -211,6 +212,12 @@ Token Script::getToken() {
     // see what next character is
     c = cin.peek();
 
+    // skip whitespace
+    while (!cin.eof() && isspace(c)) {
+      c = cin.get();
+      c = cin.peek();
+    }
+
     // check for an operator
     str = c;
     oiter = o.find(str);
@@ -218,9 +225,9 @@ Token Script::getToken() {
       c = cin.get();
       token.token = str;
       token.type = tokOPERATOR;
+      cout << "operator: " << token.token << endl;
       return token;
     }
-    str = "";
 
     // comment, eat rest of line
     if (c == '#') {
@@ -230,7 +237,8 @@ Token Script::getToken() {
     }
 
     // string literal, find next "
-    else if (c == '"') {
+    if (c == '"') {
+      str = "";
       c = cin.get(); // eat leading "
       c = cin.get();
       while (!cin.eof() && c != '"') {
@@ -267,11 +275,13 @@ Token Script::getToken() {
       }
       token.token = str;
       token.type = tokLITERAL;
+      cout << "literal: " << token.token << endl;
       return token;
     }
 
     // string literal, find next '
-    else if (c == '\'') {
+    if (c == '\'') {
+      str = "";
       c = cin.get(); // eat leading '
       c = cin.get();
       while (!cin.eof() && c != '\'') {
@@ -308,23 +318,38 @@ Token Script::getToken() {
       }
       token.token = str;
       token.type = tokLITERAL;
+      cout << "literal: " << token.token << endl;
       return token;
     }
 
     // alphanumeric string
-    else if (isalpha(c)) {
-      while (!cin.eof() && (isalnum(c) || c == '_' || c == '.')) {
+    if (isalpha(c)) {
+      str = "";
+      while (!cin.eof() && (isalnum(c) || c == '-' || c == '_' || c == '.')) {
         c = cin.get();
         str += c;
         c = cin.peek();
       }
+
+      // check for boolean
+      lstr = str;
+      transform(lstr.begin(), lstr.end(), lstr.begin(), ::tolower);
+      if (lstr == "true" || lstr == "false") {
+        token.token = lstr;
+        token.type = tokBOOL;
+        cout << "bool: " << token.token << endl;
+        return token;
+      }
+      
       token.token = str;
       token.type = tokALPHA;
+      cout << "alpha: " << token.token << endl;
       return token;
     }
 
     // number
-    else if (isdigit(c) || c == '.') {
+    if (isdigit(c) || c == '+' || c == '-' || c == '.') {
+      str = "";
 
       // get number
       while (!cin.eof() && (isdigit(c) || c == '.')) {
@@ -334,11 +359,13 @@ Token Script::getToken() {
       }
       token.token = str;
       token.type = tokNUMBER;
+      cout << "number: " << token.token << endl;
       return token;
     }
 
     // reference
-    else if (c == '&') {
+    if (c == '&') {
+      str = "";
 
       // get reference
       c = cin.get();
@@ -351,13 +378,12 @@ Token Script::getToken() {
       }
       token.token = str;
       token.type = tokREFERENCE;
+      cout << "reference: " << token.token << endl;
       return token;
     }
 
     // something else
-    else {
-      c = cin.get();
-    }
+    c = cin.get();
 
   }
 
